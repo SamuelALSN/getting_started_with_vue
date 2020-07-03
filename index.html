@@ -17,7 +17,12 @@
             <p v-if="inventory>  10"> In Stock </p>
             <p v-else-if="inventory <=10 && inventory > 0"> Almost sold out </p>
             <p v-show="onSale"> on Sale </p>
-            <p v-else> Out of the stock </p>
+            <p v-else
+               :class="{ outOfStock: !inStock}"> Out of the stock
+            </p>
+
+            <p :class="{ outOfStock: !inStock}"> Out of the stock
+            </p>
 
             <ul>
                 <li v-for="detail in details"> {{ detail }}</li>
@@ -27,10 +32,15 @@
                  class="color-box"
                  :style="{backgroundColor: variant.variantColor}"
                  @mouseover="updateProduct(variant.variantImage)">
-<!--                <p v-on:mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p>-->
+                <!--                <p v-on:mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p>-->
             </div>
 
-            <button v-on:click="addToCart"> Add to Cart</button>
+            <button v-on:click="addToCart"
+                    :disabled="!inStock"
+                    :class="{ disabledButton : !inStock}">
+                <!-- we bind in the line above  the disabledButton class to the inStock property || so when inStock property is evaluated to false the classname disabledButton is set -->
+                Add to Cart
+            </button>
             <button v-on:click="removeFromCart"> Remove from Card</button>
             <div class="cart">
                 <p>Cart ({{ cart }})</p>
