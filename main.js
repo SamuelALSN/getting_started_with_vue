@@ -22,10 +22,13 @@ var app = new Vue({
         cart: 0
     },
     methods: {
-        addToCart: function () {
+        addToCart() {
             this.cart += 1
         },
-        updateProduct: function (variantImage) {
+        removeFromCart: function () {
+            if (this.cart !== 0) this.cart -= 1
+        },
+        updateProduct(variantImage) {
             this.image = variantImage
         }
     }
