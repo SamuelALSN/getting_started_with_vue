@@ -1,4 +1,10 @@
 Vue.component('product', {
+    props: {
+        premium: {
+            type: Boolean,
+            required: true
+        }
+    },
     template: `
         <div class="product">
         <div class="product-image">
@@ -7,12 +13,12 @@ Vue.component('product', {
         <div class="product-info">
             <h1> {{displayTitleIfonSale}}</h1>
             <p v-if="inStock"> In Stock </p>
-            <p v-else :class="{ outOfStock: !inStock}"> Out of the stock
-            </p>
-
-            <ul>
-                <li v-for="detail in details"> {{ detail }}</li>
-            </ul>
+            <p v-else :class="{ outOfStock: !inStock}"> Out of the stock</p>
+            <p> Shipping {{ shipping }}</p>
+                <product-details :details="details"></product-details>
+<!--            <ul>-->
+<!--                <li v-for="detail in details"> {{ detail }}</li>-->
+<!--            </ul>-->
             <div v-for="(variant,index) in variants"
                  :key="variant.variantId"
                  class="color-box"
@@ -84,59 +90,33 @@ Vue.component('product', {
         },
         displayTitleIfonSale() {
             if (this.onSale) return this.brand + ' ' + this.product
+        },
+        shipping() {
+            if (this.premium) {
+                return 'Free'
+            } else {
+                return 2.99
+            }
         }
     }
 })
+
+Vue.component('product-details', {
+    props: {
+        details: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+            <ul>
+                <li v-for="detail in details"> {{ detail }}</li>
+            </ul>`,
+})
+
 var app = new Vue({
     el: '#app',
-    // data: {
-    //     brand: 'Nike',
-    //     product: 'Socks',
-    //     selectedVariant: 0,
-    //     link: 'www.google.com',
-    //     inventory: 100,
-    //     onSale: true,
-    //     details: ["80% coton", "20% polyester", "Gender-neutral"],
-    //     variants: [
-    //         {
-    //             variantId: 2234,
-    //             variantColor: "green",
-    //             variantImage: './assets/vmSocks-green-onWhite.jpg',
-    //             variantQuantity: 10
-    //         },
-    //         {
-    //             variantId: 2235,
-    //             variantColor: "blue",
-    //             variantImage: './assets/vmSocks-blue-onWhite.jpg',
-    //             variantQuantity: 0
-    //         }
-    //     ],
-    //     cart: 0
-    // },
-    // methods: {
-    //     addToCart() {
-    //         this.cart += 1
-    //     },
-    //     removeFromCart: function () {
-    //         if (this.cart !== 0) this.cart -= 1
-    //     },
-    //     updateProduct(index) {
-    //         this.selectedVariant = index
-    //         console.log(index)
-    //     }
-    // },
-    // computed: {
-    //     title() {
-    //         return this.brand + ' ' + this.product
-    //     },
-    //     image() {
-    //         return this.variants[this.selectedVariant].variantImage
-    //     },
-    //     inStock() {
-    //         return this.variants[this.selectedVariant].variantQuantity
-    //     },
-    //     displayTitleIfonSale() {
-    //         if (this.onSale) return this.brand + ' ' + this.product
-    //     }
-    // }
+    data: {
+        premium: false,
+    }
 })
