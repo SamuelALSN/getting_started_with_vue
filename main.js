@@ -34,9 +34,7 @@ Vue.component('product', {
                 Add to Cart
             </button>
             <button v-on:click="removeFromCart"> Remove from Card</button>
-            <div class="cart">
-                <p>Cart ({{ cart }})</p>
-            </div>
+            
         </div>
     </div>
     `,
@@ -63,12 +61,11 @@ Vue.component('product', {
                     variantQuantity: 0
                 }
             ],
-            cart: 0
         }
     },
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart')
         },
         removeFromCart: function () {
             if (this.cart !== 0) this.cart -= 1
@@ -118,5 +115,11 @@ var app = new Vue({
     el: '#app',
     data: {
         premium: false,
+        cart: 0,
+    },
+    methods: {
+        updateCart() {
+            this.cart += 1
+        }
     }
 })
