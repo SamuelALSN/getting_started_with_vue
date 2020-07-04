@@ -8,39 +8,9 @@
 <body>
 <div class="nav-bar"></div>
 <div id="app">
-    <div class="product">
-        <div class="product-image">
-            <a v-bind:href="link"> <img :src="image" alt=""> </a>
-        </div>
-        <div class="product-info">
-            <h1> {{title}}</h1>
-            <p v-if="inStock"> In Stock </p>
-            <p v-else :class="{ outOfStock: !inStock}"> Out of the stock
-            </p>
-
-            <ul>
-                <li v-for="detail in details"> {{ detail }}</li>
-            </ul>
-            <div v-for="(variant,index) in variants"
-                 :key="variant.variantId"
-                 class="color-box"
-                 :style="{backgroundColor: variant.variantColor}"
-                 @mouseover="updateProduct(index)">
-                <!--                <p v-on:mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p>-->
-            </div>
-
-            <button v-on:click="addToCart"
-                    :disabled="!inStock"
-                    :class="{ disabledButton : !inStock}">
-                <!-- we bind in the line above  the disabledButton class to the inStock property || so when inStock property is evaluated to false the classname disabledButton is set -->
-                Add to Cart
-            </button>
-            <button v-on:click="removeFromCart"> Remove from Card</button>
-            <div class="cart">
-                <p>Cart ({{ cart }})</p>
-            </div>
-        </div>
-    </div>
+   <product></product>
+   <product></product>
+   <product></product>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="main.js"></script>
