@@ -1,1 +1,1 @@
-### Getting Started with Vue.js 
+## Getting Started with Vue.js 
